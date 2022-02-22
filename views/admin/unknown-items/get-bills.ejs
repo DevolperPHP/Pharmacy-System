@@ -1,0 +1,19 @@
+<%- include("../../layout/admin-navbar") -%>
+
+<div class="management">
+    <br>
+    <p class="title">المسترجعات</p>
+    <br>
+    <br>
+</div>
+
+<div class="soldHistory">
+    <% backItems.forEach(data => {%>
+        <div class="folder" onclick="window.location.href='/admin/unknown-items/bill/<%= data.id%>'">
+            <ion-icon class="folder-icon" name="folder"></ion-icon>
+            <p><%= data.Date%></p>
+        </div>
+    <%}) %>
+</div>
+
+<%- include("../../layout/footer") -%>

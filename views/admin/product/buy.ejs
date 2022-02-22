@@ -1,0 +1,105 @@
+<%- include("../../layout/admin-navbar") -%>
+
+    <div class="buy-product">
+        <br>
+        <div class="panel">
+            <br>
+            <p class="title">شراء مادة</p>
+            <form action="/admin/product/buy/<%= data.id%>" method="post">
+                <label for="">رقم القائمة : </label> <input name="list_number" id="number_s" type="number">
+                <label for="">التاريخ : </label> <input name="Date_meet" type="date">
+                <label for="">المجهز : </label> <input name="seller"  type="text" autocomplete="off">
+                <label for="">الموظف : </label> <input name="worker"  type="text" autocomplete="off" value="<%= user.name%>">
+
+                <br>
+                <br>
+                <label for="">سعر الشراء : </label> <input name="buy_price" step="0.01" id="buy" value="<%= data.buy_price%>" onkeyup="fun()" type="number">
+                <label for="">سعر البيع : </label> <input name="sell_price" step="0.01" id="sell" value="<%= data.sell_price%>" onkeyup="fun()" type="number">
+                <label for="">الصافي : </label> <input id="total" step="0.01" type="number">
+
+                <br>
+                <br>
+
+                <label for="">الشركة : </label> <input name="company" id="company" onkeyup="typing()"  type="text" autocomplete="off">
+                <label for="">تاريخ الانتهاء : </label> <input name="expire" id="expire" onkeyup="typing()" type="date">
+                <label for="">الكمية : </label> <input name="qty" id="qty" onkeyup="typing()"  type="text" autocomplete="off">
+                <label for="">رقم الباج : </label> <input name="card_number" id="card" onkeyup="typing()"  type="text" autocomplete="off">
+                
+                <br>
+
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>كود المادة</th>
+                            <th>اسم المادة</th>
+                            <th>الاسم العلمي</th>
+                            <th>الشركة</th>
+                            <th>الكمية</th>
+                            <th>سعر الشراء</th>
+                            <th>سعر البيع</th>
+                            <th>الصافي</th>
+                            <th>المبلغ</th>
+                            <th>رقم الباج</th>
+                        </tr>
+                    </thead>
+        
+                    <tbody class="wired">
+                        <tr>
+                            <td><%= data.code%></td>
+                            <td><%= data.name%></td>
+                            <td><%= data.since_name%></td>
+                            <td id="table-company"></td>
+                            <td id="table-qty"></td>
+                            <td id="table-buy"></td>
+                            <td id="table-sell"></td>
+                            <td id="table-total"></td>
+                            <td id="total-money"></td>
+                            <td id="table-card"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br>
+                <button><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" width="48"
+                        height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#20477e" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M5 12l5 5l10 -10" />
+                    </svg></button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function typing(){
+            
+            document.getElementById("table-company").innerHTML = document.getElementById("company").value
+            document.getElementById("table-qty").innerHTML = document.getElementById("qty").value
+            document.getElementById("table-card").innerHTML = document.getElementById("card").value
+            document.getElementById("total-money").innerHTML ="$"+  document.getElementById("qty").value * document.getElementById("buy").value
+        }
+    </script>
+
+    <script>
+        document.getElementById("number_s").value = Math.floor(Math.random() * 100000);
+        var price = Number(document.getElementById("buy").value);
+            var sell = Number(document.getElementById("sell").value);
+            var calculate = sell - price
+            document.getElementById("total").value = calculate;
+            document.getElementById("table-buy").innerHTML = "$"+ price
+            document.getElementById("table-sell").innerHTML = "$"+ sell
+            document.getElementById("table-total").innerHTML = "$"+ calculate;
+
+        function fun() {
+            var price = Number(document.getElementById("buy").value);
+            var sell = Number(document.getElementById("sell").value);
+            var calculate = sell - price
+            document.getElementById("total").value = calculate;
+            document.getElementById("table-total").innerHTML = "$"+ calculate;
+            document.getElementById("table-buy").innerHTML = "$"+ price
+            document.getElementById("table-sell").innerHTML = "$"+ sell
+        }
+
+    </script>
+
+    <%- include("../../layout/footer") -%>

@@ -1,0 +1,14 @@
+<%- include("../layout/navbar") -%>
+
+<% if(err.length > 0) {%>
+    <script>
+        Swal.fire(
+            'لا يمكنك دخول هذه الصفحة',
+            'ليس لديك الصلاحية لدخول هذه الصفحة',
+            'error'
+            )
+    </script>
+<%}%>
+
+
+<%- include("../layout/footer") -%>

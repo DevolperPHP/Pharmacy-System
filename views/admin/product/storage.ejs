@@ -1,0 +1,111 @@
+<%- include("../../layout/admin-navbar") -%>
+
+    <div class="storage management">
+        <br>
+        <p class="title">المخزن</p>
+        <br>
+            <div class="contorls">
+                <select class="filter" onchange="if (this.value) window.location.href=this.value">
+                    <option value="/admin/storage/all/<%= filter%>" selected>الشركات</option>
+                    <option value="/admin/storage/all/all">جميع الشركات</option>
+                    <% category.forEach(data => {%>
+                        <option value="/admin/storage/<%= data.name%>/<%= filter%>" ><%= data.name%></option>
+                    <%}) %>
+
+                </select>
+
+                <select class="filter" onchange="if (this.value) window.location.href=this.value">
+                    <option value="/admin/storage/<%= company%>/all" selected>فلتر</option>
+                    <option value="/admin/storage/<%= company%>/all">الغاء الفلتر</option>
+                    <option value="/admin/storage/<%= company%>/a-z">A-Z</option>
+                    <option value="/admin/storage/<%= company%>/z-a">Z-A</option>
+                    <option value="/admin/storage/<%= company%>/most">الاكثر كمية</option>
+                    <option value="/admin/storage/<%= company%>/little">الاقل كمية</option>
+                    <option value="/admin/storage/<%= company%>/high">الاكثر مبيعا</option>
+                    <option value="/admin/storage/<%= company%>/low">الاقل مبيعا</option>
+                    <option value="/admin/storage/<%= company%>/new">الاحدث بالاضافة</option>
+                    <option value="/admin/storage/<%= company%>/old">الاقدم بالاضافة</option>
+                    <option value="/admin/storage/<%= company%>/expire">الاقرب للانتهاء</option>
+
+
+                    
+                </select>
+            </div>
+        <table style="direction:rtl; text-align:center; width: 100%; margin-top:250px; border: 1px solid #000000" class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>الكود</th>
+                    <th>اسم المادة</th>
+                    <th>الشركة</th>
+                    <th>الكمية<br>المباعة</th>
+                    <th>الكمية<br>المتوفرة</th>
+                    <th>سعر<br>الشراء</th>
+                    <th>سعر<br>البيع</th>
+                    <th>الصافي</th>
+                    <th>تاريخ الانتهاء</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <% for (let index = 0; index < products.length; index++) {%>
+                    <tr>
+                        <td><%= index+1%></td>
+                        <td><%= products[index].code%></td>
+                        <td><%= products[index].name%></td>
+                        <td><%= products[index].category%></td>
+                        <td><%= products[index].score%></td>
+                        <td><%= products[index].storage%></td>
+                        <td id="buy_price"><%= products[index].buy_price%></td>
+                        <td id="sell_price"><%= products[index].sell_price%></td>
+                        <td id="price"><%= (Number(products[index].sell_price) - Number(products[index].buy_price)).toFixed(2)%></td>
+                        <td><%= products[index].expire%></td>
+                    </tr>
+                <%} %>
+                <tr>
+                    <td colspan="6">المجموع</td>
+                    <td id="total_buy"></td>
+                    <td id="total_sell"></td>
+                    <td id="total"></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var price = document.querySelectorAll("#buy_price")
+        var array = [];
+
+        for (let index = 0; index < price.length; index++) {
+            var element = array.push(Number(price[index].innerHTML));
+        }
+
+        document.getElementById("total_buy").innerHTML = "$" + (array.reduce((a, b) => a+b )).toFixed(2)
+    </script>
+
+<script>
+    var price = document.querySelectorAll("#sell_price")
+    var array = [];
+
+    for (let index = 0; index < price.length; index++) {
+        var element = array.push(Number(price[index].innerHTML));
+    }
+
+    document.getElementById("total_sell").innerHTML = "$" + (array.reduce((a, b) => a+b )).toFixed(2)
+</script>
+
+<script>
+    var price = document.querySelectorAll("#price")
+    var array = [];
+
+    for (let index = 0; index < price.length; index++) {
+        var element = array.push(Number(price[index].innerHTML));
+    }
+
+    document.getElementById("total").innerHTML = "$" + (array.reduce((a, b) => a+b )).toFixed(2)
+</script>
+
+
+    <%- include("../../layout/footer") -%>

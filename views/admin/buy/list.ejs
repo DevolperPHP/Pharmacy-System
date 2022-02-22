@@ -1,0 +1,90 @@
+<%- include("../../layout/admin-navbar") -%>
+
+
+    <div class="new-list management">
+        <br>
+        <p class="title">المشتريات</p>
+        <br>
+        <div class="btns">
+            <button class="btn btn-success" onclick="printDiv()">طباعة</button>
+        <form action="/admin/buyhistory/delete-one/<%= data.id%>?_method=DELETE" method="post">
+          <button class="btn btn-danger">حذف</button>
+        </form>
+        </div>
+        <br>
+        <div id="bill">
+        <table border="1" style="direction:rtl; text-align:center; width: 100%; margin-top:250px;" class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #000000">#</th>
+                    <th style="border: 1px solid #000000">الكود</th>
+                    <th style="border: 1px solid #000000">اسم المادة</th>
+                    <th style="border: 1px solid #000000" id="for-print">الاسم العلمي</th>
+                    <th style="border: 1px solid #000000">الشركة</th>
+                    <th style="border: 1px solid #000000">الكمية المشتراة</th>
+                    <th style="border: 1px solid #000000">فري</th>
+                    <th style="border: 1px solid #000000">سعر الشراء</th>
+                    <th style="border: 1px solid #000000">سعر البيع</th>
+                    <th style="border: 1px solid #000000">المبلغ</th>
+                    <th style="border: 1px solid #000000">الصافي</th>
+                    <th style="border: 1px solid #000000">تاريخ الانتهاء</th>
+                    <th style="border: 1px solid #000000">رقم الباج</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% for (let i = 0; i < data.items.length; i++) {%>
+                    <tr>
+                        <td style="border: 1px solid #000000"><%= i+1%></td>
+                        <td style="border: 1px solid #000000"><%= data.items[i].code%></td>
+                        <td style="border: 1px solid #000000"><%= data.items[i].name%></td>
+                        <td style="border: 1px solid #000000" id="for-print"><%= data.items[i].since_name%></td>
+                        <td style="border: 1px solid #000000"><%= data.items[i].company%></td>
+                        <td style="border: 1px solid #000000"><%= data.items[i].qty%></td>
+                        <td style="border: 1px solid #000000"><%= data.items[i].free%></td>
+                        <td style="border: 1px solid #000000"><%= data.items[i].buy_price%></td>
+                        <td style="border: 1px solid #000000"><%= data.items[i].sell_price%></td>
+                        <td id="price" style="border: 1px solid #000000"><%= data.items[i].buy_price * data.items[i].qty%></td>
+                        <td style="border: 1px solid #000000"><%= (data.items[i].sell_price - data.items[i].buy_price).toFixed(2) %></td>
+                        <td style="border: 1px solid #000000"><%= data.items[i].expire%></td>
+                        <td style="border: 1px solid #000000"><%= data.items[i].bach%></td>
+                    </tr>
+                <% } %>
+                <tr>
+                    <td colspan="7" style="border: 1px solid #000000">المجموع</td>
+                    <td colspan="7" style="border: 1px solid #000000" id="total"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <script>
+        function printDiv() {
+            var unwant =  document.querySelectorAll("#for-print")
+            for (let i = 0; i < unwant.length; i++) {
+                unwant[i].style.display = "none"
+            }
+            var divContents = document.getElementById("bill").innerHTML;
+            var a = window.open('', '', 'height=4961, width=3508');
+            a.document.write('<html>');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+            window.location.reload();
+        }
+    </script>
+
+<script>
+    var price = document.querySelectorAll("#price")
+    var array = [];
+
+    for (let index = 0; index < price.length; index++) {
+        var element = array.push(Number(price[index].innerHTML));
+    }
+
+    document.getElementById("total").innerHTML = "$" + (array.reduce((a, b) => a+b ))
+</script>
+
+    <%- include("../../layout/footer") -%>

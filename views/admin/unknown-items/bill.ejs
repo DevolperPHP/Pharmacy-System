@@ -1,0 +1,44 @@
+<%- include("../../layout/admin-navbar") -%>
+
+<div class="management">
+    <br>
+    <p class="title">المسترجعات</p>
+    <br>
+    <div class="info back-bill">
+        <p>اسم المسترجع : <%= data.name%></p>
+        <p>التاريخ : <%= data.Date%></p>
+        <p>Invoice ID : <%= data.invoice%></p>
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <th>#</th>
+            <th>الكود</th>
+            <th>اسم المادة</th>
+            <th>الكمية المسترجعة</th>
+            <th>فري</th>
+            <th>سعر البيع</th>
+            <th>المبلغ</th>
+            <th>رقم الباج</th>
+            <th>تاريخ الانتهاء</th>
+        </thead>
+
+        <tbody>
+            <% for (let i = 0; i < data.items.length; i++) {%>
+                <tr>
+                    <td><%= i%></th>
+                    <td><%= data.items[i].code%></td>
+                    <td><%= data.items[i].name%></td>
+                    <td><%= data.items[i].qty%></td>
+                    <td><%= data.items[i].free%></td>
+                    <td><%= data.items[i].sell_price%></td>
+                    <td><%= ( data.items[i].qty * data.items[i].sell_price )%></th>
+                    <td><%= data.items[i].bach%></td>
+                    <td><%= data.items[i].expire%></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+
+<%- include("../../layout/footer") -%>

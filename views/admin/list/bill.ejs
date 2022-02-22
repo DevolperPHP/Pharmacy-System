@@ -1,0 +1,211 @@
+<%- include("../../layout/admin-navbar") -%>
+    <div class="bill-admin">
+        <br>
+        <div class="info">
+            <p>اسم الزبون : <%= data.name%>
+            </p>
+            <p>رقم الفاتورة : <%= data.bill_id%>
+            </p>
+            <p>التاريخ : <%= data.Date%>
+            </p>
+        </div>
+
+        <div class="info-table">
+            <table  style="margin-top: -150px;" class="main-table table table-striped">
+                <tr>
+                    <th>#</th>
+                    <th>اسم المادة</th>
+                    <th>الكمية</th>
+                    <th>فري</th>
+                    <th>السعر</th>
+                    <th>المبلغ</th>
+                    <th>تاريخ الانتهاء</th>
+                </tr>
+
+
+                <% for (let index=0; index < data.order.length; index++) {%>
+                    <tr>
+                        <td>
+                            <%= index+1%>
+                        </td>
+                        <td>
+                            <%= data.order[index].name%>
+                        </td>
+                        <td>
+                            <%= data.order[index].qty%>
+                        </td>
+                        <td>
+                            <%= data.order[index].free%>
+                        </td>
+                        <td>
+                            <%= data.order[index].price%>
+                        </td>
+                        <td id="price_back">
+                            <%= data.order[index].price * data.order[index].qty%>
+                        </td>
+                        <td>
+                            <%= data.order[index].expire%>
+                        </td>
+                    </tr>
+                    <%} %>
+
+                        <tr>
+                            <td colspan="3">المجموع</td>
+                            <td colspan="3" id="total_back"></td>
+                        </tr>
+
+            </table>
+            <br>
+            <br>
+            <div class="returnItems" style="margin-right: -0px!important; width: 1000px">
+                <div style="margin-right: -500px;">
+                    <p>اعادة مواد</p>
+                <form action="/admin/list/bill/back/<%= data.bill_id%>?_method=PUT" method="post">
+                    <input type="number" style="width: 130px" name="qty" placeholder="الكمية المعادة">
+                    <input type="number" style="width: 130px" name="free" placeholder="فري">
+                    <input type="text" style="width: 130px" name="bach" placeholder="رقم الباج">
+                    <input style="width: 130px"  type="number" name="code" placeholder="كود المادة">
+                    <br>
+                    <button style="margin-top: 20px;" class="btn btn-warning">اعادة</button>
+
+                </form>
+            </div>
+            <table style="margin-top: 20px;" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>اسم المادة</th>
+                        <th>الكمية المعادة</th>
+                        <th>فري</th>
+                        <th>سعر البيع</th>
+                        <th>المبلغ</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% for (let i = 0; i < data.backItems.length; i++) {%>
+                        <tr>
+                        <td><%= data.backItems[i].name %></td>
+                        <td><%= data.backItems[i].qty %></td>
+                        <td><%= data.backItems[i].free %></td>
+                        <td><%= data.backItems[i].sell_price %></td>
+                        <td id="price"><%= data.backItems[i].sell_price * data.backItems[i].qty%></td>
+                    </tr>
+                    <%} %> 
+                    <tr>
+                        <td colspan="3">المجموع</td>
+                        <td colspan="2" id="total"></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+        </div>
+        <div style="margin-top: -150px;
+        margin-left: -150px;" class="btns">
+            <button class="btn btn-success" onclick="window.location.href='/bill/get/<%= data.bill_id%>'">طباعة</button>
+            <form action="/admin/bill/delete/<%= data.bill_id%>?_method=DELETE" method="post">
+                <button class="btn btn-danger">حذف</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="bill-admin-mobile">
+        <br>
+        <div class="info">
+            <p>اسم الزبون : <%= data.name%>
+            </p>
+            <p>رقم الفاتورة : <%= data.bill_id%>
+            </p>
+            <p>التاريخ : <%= data.Date%>
+            </p>
+        </div>
+
+        <div class="info-table">
+            <table>
+                <tr>
+                    <th>#</th>
+                    <th>اسم المادة</th>
+                    <th>الكمية</th>
+                    <th>فري</th>
+                    <th>السعر</th>
+                    <th>المبلغ</th>
+                    <th>تاريخ الانتهاء</th>
+                </tr>
+
+
+                <% for (let index=0; index < data.order.length; index++) {%>
+                    <tr>
+                        <td>
+                            <%= index+1%>
+                        </td>
+                        <td>
+                            <%= data.order[index].name%>
+                        </td>
+                        <td>
+                            <%= data.order[index].qty%>
+                        </td>
+                        <td>
+                            <%= data.order[index].free%>
+                        </td>
+                        <td>
+                            <%= data.order[index].price%>
+                        </td>
+                        <td id="price-mobile">
+                            <%= data.order[index].price * data.order[index].qty %>
+                        </td>
+                        <td>
+                            <%= data.order[index].expire%>
+                        </td>
+                    </tr>
+                    <%} %>
+
+                        <tr>
+                            <td colspan="3">المجموع</td>
+                            <td colspan="3" id="total-mobile"></td>
+                        </tr>
+
+            </table>
+        </div>
+        <div class="btns">
+            <button class="btn btn-success" onclick="window.location.href='/bill/get/<%= data.bill_id%>'">طباعة</button>
+            <form action="/admin/bill/delete/<%= data.bill_id%>?_method=DELETE" method="post">
+                <button class="btn btn-danger">حذف</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var price = document.querySelectorAll("#price_back")
+        var array = []
+
+        for (let index = 0; index < price.length; index++) {
+            var element = array.push(Number(price[index].innerHTML));
+        }
+
+        var total = document.getElementById("total_back")
+        total.innerHTML = "$" + (array.reduce((a, b) => a + b)).toFixed(2)
+    </script>
+
+    <script>
+        var price = document.querySelectorAll("#price")
+        var array = [];
+
+        for (let index = 0; index < price.length; index++) {
+            var element = array.push(Number(price[index].innerHTML));
+        }
+
+        document.getElementById("total").innerHTML = "$" + (array.reduce((a, b) => a + b))
+    </script>
+
+    <script>
+        var price = document.querySelectorAll("#price-mobile")
+        var array = [];
+
+        for (let index = 0; index < price.length; index++) {
+            var element = array.push(Number(price[index].innerHTML));
+        }
+
+        document.getElementById("total-mobile").innerHTML = "$" + (array.reduce((a, b) => a + b)).toFixed(2)
+    </script>
+
+    <%- include("../../layout/footer") -%>

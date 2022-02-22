@@ -1,0 +1,83 @@
+<%- include("../../layout/admin-navbar") -%>
+
+    <div class="get-product">
+        <br>
+        <p class="title">
+            <%= data.name%>
+        </p>
+
+        <div class="info">
+            <p><span>اسم المادة :</span> <%= data.name%>
+            </p>
+            <p><span>الاسم العلمي :</span> <%= data.since_name%>
+            </p>
+            <p><span>الكود :</span> <%= data.code%>
+            </p>
+            <p><span>القسم :</span> <%= data.category%>
+            </p>
+        </div>
+
+        <div class="info">
+            <p><span>الكمية المتوفرة :</span> <%= data.storage%>
+            </p>
+            <p><span>الشركة المصنعة :</span> <%= data.category%>
+            </p>
+            <p><span>تاريخ الاضافة :</span> <%= data.Date%>
+            </p>
+            <p><span>تاريخ الانتهاء :</span> <%= data.expire%></p>
+        </div>
+
+        <div class="info">
+            <p><span>سعر الشراء :</span> <%= data.buy_price%>$</p>
+            <p><span>سعر البيع :</span> <%= data.sell_price%>$</p>
+            <p><span>المبلغ الصافي :</span> <%= (Number(data.sell_price) - Number(data.buy_price)).toFixed(2)%>$</p>
+            <p><span>عدد المبيعات :</span> <%= data.score%></p>
+        </div>
+
+        <br>
+        <div class="analysis">
+            <canvas  id="myChart"></canvas>
+        </div>
+    </div>
+    <script>
+
+        var a = "<%= data.scoreAnalysis%>".split`,`.map(x => +x)
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['', '', '', '', '', ''],
+                datasets: [{
+                    label: 'عدد المبيعات',
+                    data: a.reverse(),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    <%- include("../../layout/footer") -%>

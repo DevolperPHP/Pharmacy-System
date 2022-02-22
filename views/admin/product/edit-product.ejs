@@ -1,0 +1,85 @@
+<%- include("../../layout/admin-navbar") -%>
+
+<div class="edit-element">
+    <br>
+    <div class="panel">
+        <ion-icon class="add-product-icon" name="medkit"></ion-icon>
+        <p>تحديث معلومات</p>
+        <form action="/admin/product/edit/<%= data.id%>?_method=PUT" method="post">
+
+            <label for=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-writing" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M20 17v-12c0 -1.121 -.879 -2 -2 -2s-2 .879 -2 2v12l2 2l2 -2z" />
+                <path d="M16 7h4" />
+                <path d="M18 19h-13a2 2 0 1 1 0 -4h4a2 2 0 1 0 0 -4h-3" />
+              </svg></label> <input  type="text" autocomplete="off" name="name" placeholder="اسم المادة" value="<%= data.name%>">
+              <br>
+
+              <label for=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-flask" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <line x1="9" y1="3" x2="15" y2="3" />
+                <line x1="10" y1="9" x2="14" y2="9" />
+                <path d="M10 3v6l-4 11a0.7 .7 0 0 0 .5 1h11a0.7 .7 0 0 0 .5 -1l-4 -11v-6" />
+              </svg></label> <input  type="text" autocomplete="off" name="since_name" placeholder="الاسم العلمي للمادة" value="<%= data.since_name%>">
+              <br>
+
+              <label for=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-receipt-2" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" />
+                <path d="M14 8h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5m2 0v1.5m0 -9v1.5" />
+              </svg></label> <input class="half" type="number" name="buy_price" step="0.0001" placeholder="سعر الشراء" value="<%= data.buy_price%>">
+
+
+              <label for=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-wallet" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" />
+                <path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
+              </svg></label> <input class="half" type="number" name="sell_price" step="0.0001" placeholder="سعر البيع" value="<%= data.sell_price%>">
+              <br>
+
+
+              <label for=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <line x1="4" y1="6" x2="20" y2="6" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="18" x2="20" y2="18" />
+              </svg></label> 
+              <select name="category">
+                  <option selected>الشركة<option>
+                  <% category.forEach(data => {%>
+                    <option><%= data.name%></option>
+                <%}) %>
+              </select>
+              <br>
+
+              <label for=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sort-descending-numbers" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M4 15l3 3l3 -3" />
+                <path d="M7 6v12" />
+                <path d="M17 14a2 2 0 0 1 2 2v3a2 2 0 1 1 -4 0v-3a2 2 0 0 1 2 -2z" />
+                <circle cx="17" cy="5" r="2" />
+                <path d="M19 5v3a2 2 0 0 1 -2 2h-1.5" />
+              </svg></label> <input  type="text" autocomplete="off" name="bach" placeholder="رقم الباج" value="<%= data.bach%>">
+<br>
+              <label for=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-barcode" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M4 7v-1a2 2 0 0 1 2 -2h2" />
+                <path d="M4 17v1a2 2 0 0 0 2 2h2" />
+                <path d="M16 4h2a2 2 0 0 1 2 2v1" />
+                <path d="M16 20h2a2 2 0 0 0 2 -2v-1" />
+                <rect x="5" y="11" width="1" height="2" />
+                <line x1="10" y1="11" x2="10" y2="13" />
+                <rect x="14" y="11" width="1" height="2" />
+                <line x1="19" y1="11" x2="19" y2="13" />
+              </svg></label> <input  type="text" autocomplete="off" name="code" placeholder="كود المادة" value="<%= data.code%>">
+              <br>
+
+              <button><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#20477e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M5 12l5 5l10 -10" />
+              </svg></button>
+        </form>
+    </div>
+</div>
+
+<%- include("../../layout/footer") -%>

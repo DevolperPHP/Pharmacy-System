@@ -1,0 +1,66 @@
+
+
+<button style="font-size: 30px" onclick="window.location.href='/cart'">رجوع</button>
+<button class="printer"style="font-size: 30px"onclick="printDiv()">طباعة</button>
+    <div class="bill" id="bill">
+        <br>
+        <br>
+        <div style="font-size: 25px; position: absolute; top: 350px; left: -1%; right:0%;
+        display: flex; width: 1000px; direction: rtl">
+                    <p style="font-size: 35px; margin-top: 18px; margin-left: 20px; margin-right: 20px">اسم الزبون : <%= data.name%></p> <p style="margin-left: 20px; margin-right: 20px">رقم الفاتورة : <%= data.bill_id%></p> <p style="margin-left: 20px; margin-right: 20px">التاريخ : <%= data.Date%></p>
+        </div>
+        <table style="border-collapse: collapse; border:1px solid #000000; position: absolute; top: 450px; left: 5%; right: 0%; text-align: center;
+        width: 900px; direction: rtl; font-size: 30px;">
+            <tr style="border-collapse: collapse; border:1px solid #000000;">
+                <th style="border-collapse: collapse; border:1px solid #000000;">#</th>
+                <th style="border-collapse: collapse; border:1px solid #000000;">اسم المادة</th>
+                <th style="border-collapse: collapse; border:1px solid #000000;">الكمية</th>
+                <th style="border-collapse: collapse; border:1px solid #000000;">فري</th>
+                <th style="border-collapse: collapse; border:1px solid #000000;">السعر</th>
+                <th style="border-collapse: collapse; border:1px solid #000000;">المبلغ</th>
+                <th style="border-collapse: collapse; border:1px solid #000000;">رقم الباج</th>
+                <th style="border-collapse: collapse; border:1px solid #000000;">تاريخ الانتهاء</th>
+            </tr>
+
+            <% for (let index = 0; index < data.order.length; index++) {%>
+                <tr>
+                    <td style="border-collapse: collapse; border:1px solid #000000;"><%= index+1%></td>
+                    <td style="border-collapse: collapse; border:1px solid #000000;"><%= data.order[index].name%></td>
+                    <td style="border-collapse: collapse; border:1px solid #000000;"><%= data.order[index].qty%></td>
+                    <td style="border-collapse: collapse; border:1px solid #000000;"><%= data.order[index].free%></td>
+                    <td style="border-collapse: collapse; border:1px solid #000000;"><%= data.order[index].price%></td>
+                    <td id="price" style="border-collapse: collapse; border:1px solid #000000;"><%= data.order[index].price * data.order[index].qty%></td>
+                    <td style="border-collapse: collapse; border:1px solid #000000;"><%= data.order[index].bach%></td>
+                    <td style="border-collapse: collapse; border:1px solid #000000;"><%= data.order[index].expire%></td>
+                </tr>
+            <%} %>
+            <tr>
+                <td colspan="3" style="border-collapse: collapse; border:1px solid #000000;">المجموع</td>
+                <td colspan="3" style="border-collapse: collapse; border:1px solid #000000;" id="total"></td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        var price = document.querySelectorAll("#price")
+        var array = [];
+
+        for (let index = 0; index < price.length; index++) {
+            var element = array.push(Number(price[index].innerHTML));
+        }
+
+        document.getElementById("total").innerHTML = "$" + (array.reduce((a, b) => a+b ))
+    </script>
+<div class="print">
+</div>
+    <script>
+        function printDiv() {
+            var divContents = document.getElementById("bill").innerHTML;
+            var a = window.open('', '', 'height=4961, width=3508');
+            a.document.write('<html>');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+        }
+    </script>
